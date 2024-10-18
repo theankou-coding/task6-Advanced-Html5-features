@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Offline Webpage</title>
+</head>
+
+<body>
+    <h1>Offline Webpage</h1>
+    <p>This webpage is cached using a service worker, so it can be accessed even offline. You can try disconnecting from
+        the internet and refreshing the page to see it in action.</p>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(function (registration) {
+                    console.log('Service worker registered with scope:', registration.scope);
+                })
+                .catch(function (error) {
+                    console.error('Service worker registration failed:', error);
+                });
+        }
+
+        self.addEventListener('install', function (event) {
+            event.waitUntil(
+                caches.open('static-cache')
+                    .then(function (cache) {
+                        return cache.addAll([
+                            '/',
+                            'service-worker.js'
+                        ]);
+                    })
+            );
+        });
+
+        self.addEventListener('fetch', function (event) {
+            event.respondWith(
+                caches.match(event.request)
+                    .then(function (response) {
+                        if (response) {
+                            return response;
+                        }
+                        return fetch(event.request);
+                    })
+            );
+        });
+    </script>
+</body>
+
+</html>

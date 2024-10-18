@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Color Selector</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 0.5s ease;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Select a Theme Color</h1>
+    <select id="colorSelector">
+        <option value="#ffffff">White</option>
+        <option value="#f28b82">Light Red</option>
+        <option value="#fbbc04">Yellow</option>
+        <option value="#34a853">Green</option>
+        <option value="#4285f4">Blue</option>
+        <option value="#8e44ad">Purple</option>
+        <option value="#2c2c2c">Dark</option>
+    </select>
+
+    <script>
+        const colorSelector = document.getElementById('colorSelector');
+
+        // Load saved theme color from localStorage and apply it
+        const savedColor = localStorage.getItem('themeColor');
+        if (savedColor) {
+            document.body.style.backgroundColor = savedColor;
+            colorSelector.value = savedColor;
+        }
+
+        // Update background color and save the choice in localStorage
+        colorSelector.addEventListener('change', () => {
+            const selectedColor = colorSelector.value;
+            document.body.style.backgroundColor = selectedColor;
+            localStorage.setItem('themeColor', selectedColor);
+        });
+    </script>
+
+</body>
+
+</html>

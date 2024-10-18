@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Theme Color Selector</title>
+    <style>
+        body {
+            background-color: #ffffff;
+            /* Default background color */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Theme Color Selector</h1>
+    <div id="colorOptions">
+        <button id="redButton">Red</button>
+        <button id="blueButton">Blue</button>
+        <button id="greenButton">Green</button>
+    </div>
+
+    <script>
+        const colorOptions = document.getElementById("colorOptions");
+        const savedColor = localStorage.getItem("themeColor");
+
+        if (savedColor) {
+            document.body.style.backgroundColor = savedColor;
+        }
+
+        colorOptions.addEventListener("click", function (event) {
+            const selectedColor = event.target.id;
+            document.body.style.backgroundColor = selectedColor;
+            localStorage.setItem("themeColor", selectedColor);
+        });
+    </script>
+</body>
+
+</html>
